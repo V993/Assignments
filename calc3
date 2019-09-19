@@ -1,0 +1,80 @@
+/*
+Author: Leonardo Matone
+Course: CSCI-136
+Instructor: Katherine Howitt
+Assignment: Project 1C
+
+Takes a list of numbers and adds or subtracts multiple lines
+
+*/
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main()
+{
+	// declarations
+	char sign;
+	string num;
+	int square, numb;
+	int total = 0;
+
+	//cout << total << endl;
+	cin >> num;
+	total += num; //total calc
+	
+	
+	//While loop for the text file input
+	while (cin >> sign >> num)
+	{	
+		//cycle through each character in num for exponent call
+		for (int i; i < num.length(); i++)
+		{
+			//if character is found:
+			if (num[i] = '^')
+			{
+				//square number
+				square = pow(stoi(num), 2);
+				
+				//proceed with calc with squared number
+				if (sign == '-')
+				{
+					total -= square;
+					//cout << total << endl;
+				}
+				else if (sign == '+')
+				{
+					total += square;
+					//cout << total << endl;
+				}
+				else if (sign == ';')
+				{
+					cout << total << endl;
+					total = num;
+					continue;
+				}
+			}
+			else 
+			{
+				if (sign == '-')
+				{
+					total -= num;
+					//cout << total << endl;
+				}
+				else if (sign == '+')
+				{
+					total += num;
+					//cout << total << endl;
+				}
+				else if (sign == ';')
+				{
+					cout << total << endl;
+					total = num;
+					continue;
+				}
+					}
+				}	
+	}
+	cout << total << endl; // print summation
+}
