@@ -10,7 +10,7 @@
 using namespace std;
 
 //for part 1, removing the second item in the bag:
-/*
+// /*
 int main() {
 
     //test value linkedbag
@@ -53,7 +53,7 @@ int main() {
     }
     cout << endl; 
 }
-*/
+// */
 
     //for part 2, revising add() so that entries are added at the end of the chain:
 /*
@@ -102,7 +102,7 @@ int main() {
     int array[10] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
 
     //cout array to test
-    cout << "| ";
+    cout << "Original Array:                        | ";
     for (int i = 0; i < 10; i++) {
         cout << array[i] << " | ";
     }
@@ -115,7 +115,7 @@ int main() {
     vector<int> vectorTest = bagFromArray.toVector();
 
     //cout vector for testing
-    cout << "| ";
+    cout << "LinkedBag Conversion -> Vector output: | ";
     for (int i = 0; i < bagFromArray.getCurrentSize(); i++) {
         cout << vectorTest[i] << " | ";
     }
@@ -124,7 +124,8 @@ int main() {
 */
 
     //for part 5, creating a method which removes a random entry from the bag.
-
+/*
 int main() {
     
 }
+*/
