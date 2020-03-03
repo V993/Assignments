@@ -6,7 +6,6 @@
 
 #include "ArrayBag.h"
 //#include <cstddef>
-hello
 
 template<class ItemType>
 ArrayBag<ItemType>::ArrayBag(): itemCount(0), maxItems(DEFAULT_CAPACITY)

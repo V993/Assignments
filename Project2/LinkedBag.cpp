@@ -4,6 +4,8 @@
 /** ADT bag: Link-based implementation.
     @file LinkedBag.cpp */
 
+//Leonardo Matone
+
 #include "LinkedBag.h"
 #include "Node.h"
 #include <cstddef>
