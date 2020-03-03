@@ -1,5 +1,6 @@
 # Assignments for CSCI 235. 
-# Projects address a range of issues. All projects written in C++.
+# Projects address a range of tasks. 
+# All projects written in C++.
 
 
 
