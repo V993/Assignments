@@ -15,14 +15,18 @@ int main() {
 
     //test value linkedbag
     LinkedBag<int> bigBag;
-    bigBag.add(20);
+    bigBag.add(20); //last item (items are added to front of list)
     bool test = bigBag.add(30);
     bigBag.add(40);
     bigBag.add(50);
     bigBag.add(60);
-    bigBag.add(60);
-    bigBag.add(60);
-    bigBag.add(60);
+    bigBag.add(70);
+    bigBag.add(80);
+    bigBag.add(90); //first item (items are added to front of list)
+
+
+    //bigBag.remove(80);
+
 
     //test sees if it was added (bool returned true)
     cout << "Added: " << test << endl; 
@@ -47,9 +51,10 @@ int main() {
     cout << "removed: " << testRemoved << endl;
     cout << "New size: " << bigBag.getCurrentSize() << endl;
 
+    vector<int> vectorTest2 = bigBag.toVector();
     cout << "| ";
     for (int i = 0; i < bigBag.getCurrentSize(); i++) {
-        cout << vectorTest[i] << " | ";
+        cout << vectorTest2[i] << " | ";
     }
     cout << endl; 
 }

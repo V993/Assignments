@@ -10,6 +10,10 @@
 #include "Node.h"
 #include <cstddef>
 
+#include <iostream>
+
+using namespace std;
+
 template<class ItemType>
 LinkedBag<ItemType>::LinkedBag() : headPtr(nullptr), itemCount(0)
 {
@@ -306,8 +310,7 @@ Node<ItemType>* LinkedBag<ItemType>::getPointerTo(const ItemType& anEntry) const
 template<class ItemType>
 bool LinkedBag<ItemType>::removeSecond() {
    
-   Node<ItemType>* countNode = headPtr;
-   Node<ItemType>* secondNode = headPtr;   
+   Node<ItemType>* countNode = headPtr;  
 
    int counter = 0;
    while (countNode != nullptr) {
@@ -318,8 +321,17 @@ bool LinkedBag<ItemType>::removeSecond() {
    if (counter < 2) {
       return false;
    }
-   
+
+   Node<ItemType>* secondNode = headPtr->getNext();
+
+   // // boring way: 
+   // headPtr->setNext(secondNode->getNext());
+   // cout << headPtr->getNext()->getItem();
+   // secondNode = nullptr;
+   // delete secondNode;
+
    ItemType item = secondNode->getItem();
+   //cout << item << endl;
    remove(item);
 
    return true;
