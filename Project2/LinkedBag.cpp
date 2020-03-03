@@ -318,10 +318,7 @@ bool LinkedBag<ItemType>::removeSecond() {
    if (counter < 2) {
       return false;
    }
-
-   secondNode = secondNode->getNext();
-   secondNode = secondNode->getNext();
-
+   
    ItemType item = secondNode->getItem();
    remove(item);
 
