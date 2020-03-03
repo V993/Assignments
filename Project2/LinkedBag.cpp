@@ -60,8 +60,8 @@ LinkedBag<ItemType>::LinkedBag(const LinkedBag<ItemType>& aBag)
 }  // end copy constructor
 
 template<class ItemType>
-LinkedBag<ItemType>::LinkedBag(ItemType array[], int size) {
-   itemCount = size;
+LinkedBag<ItemType>::LinkedBag(ItemType entries[], int entryCount) {
+   itemCount = entryCount;
    headPtr = new Node<ItemType>();
    if (size == 0) {
       headPtr = nullptr;
