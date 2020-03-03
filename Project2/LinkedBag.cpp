@@ -63,13 +63,13 @@ template<class ItemType>
 LinkedBag<ItemType>::LinkedBag(ItemType entries[], int entryCount) {
    itemCount = entryCount;
    headPtr = new Node<ItemType>();
-   if (size == 0) {
+   if (entryCount == 0) {
       headPtr = nullptr;
    }
    else
    {
       // Copy first index
-      headPtr->setItem(array[0]);
+      headPtr->setItem(entries[0]);
       
       // Copy remaining nodes
       Node<ItemType>* newChainPtr = headPtr;      // Points to last node in new chain
@@ -78,7 +78,7 @@ LinkedBag<ItemType>::LinkedBag(ItemType entries[], int entryCount) {
       while ((i < itemCount) && (newChainPtr != nullptr))
       {
          // Get next item from original chain
-         ItemType nextItem = array[i];
+         ItemType nextItem = entries[i];
          
          // make a new node with the next item
          Node<ItemType>* newNodePtr = new Node<ItemType>(nextItem);
@@ -120,6 +120,22 @@ int LinkedBag<ItemType>::getCurrentSize() const
    }
    return counter;
 }  // end getCurrentSize
+
+template<class ItemType>
+int LinkedBag<ItemType>::recursionCount(Node<ItemType>* ptr)
+{
+   if (ptr == nullptr)
+   {
+      return 0;
+   }
+   return 1 + recursionCount(ptr->getNext());
+}
+
+template<class ItemType>
+int LinkedBag<ItemType>::getCurrentSizeRecursive() 
+{
+   return recursionCount(headPtr);
+} //end getCurrentSizeRecursive
 
 template<class ItemType>
 bool LinkedBag<ItemType>::add(const ItemType& newEntry)
@@ -314,7 +330,7 @@ Node<ItemType>* LinkedBag<ItemType>::getPointerTo(const ItemType& anEntry) const
 } // end getPointerTo
 
 template<class ItemType>
-bool LinkedBag<ItemType>::removeSecond() {
+bool LinkedBag<ItemType>::deleteSecondNode() {
    
    //counter ptr
    Node<ItemType>* countNode = headPtr;  
@@ -343,3 +359,17 @@ bool LinkedBag<ItemType>::removeSecond() {
 
    return true;
 } // end removeSecond
+
+template<class ItemType>
+ItemType LinkedBag<ItemType>::removeRandom() {
+   int deleteThis = rand() % itemCount;
+   Node<ItemType>* remover = headPtr;
+   cout << deleteThis << endl;
+
+   for (int i = 0; i < deleteThis; i++) {
+      remover = remover->getNext();
+   }
+   ItemType item = remover->getItem();
+   remove(item);
+   return item;
+}

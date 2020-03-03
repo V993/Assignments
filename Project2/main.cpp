@@ -95,7 +95,7 @@ int main() {
 
     //for part 3, revising getCurrentSize so that it counts the number of nodes in the linked chain
     //manually, ITERATIVELY and RECURSIVELY.
-// /*
+/*
 int main() {
 
     //test value linkedbag
@@ -110,7 +110,8 @@ int main() {
     vector<int> vectorTest = bigBag.toVector();
 
     //output the size of LinkedBag. Should be 5.
-    cout << "New size: " << bigBag.getCurrentSize() << endl;
+    cout << "New size Iterative: " << bigBag.getCurrentSize() << endl;
+    cout << "New size Recursive: " << bigBag.getCurrentSizeRecursive() << endl;
 
     //output contents of linkedbag from vector
     cout << "| ";
@@ -119,7 +120,7 @@ int main() {
     }
     cout << endl; 
 }
-// */
+*/
 
     //for part 4, making a new constructor which creates a linkedbag from an array.
 /*
@@ -149,8 +150,38 @@ int main() {
 */
 
     //for part 5, creating a method which removes a random entry from the bag.
-/*
+// /*
 int main() {
+    //test value linkedbag
+    LinkedBag<int> bigBag;
+    bool test = bigBag.add(20);
+    bigBag.add(30);
+    bigBag.add(40);
+    bigBag.add(50);
+    bigBag.add(60);
+
+    //establish vector to test all results
+    vector<int> vectorTest = bigBag.toVector();
     
+    cout << "| ";
+    for (int i = 0; i < bigBag.getCurrentSize(); i++) {
+        cout << vectorTest[i] << " | ";
+    }
+    cout << endl;
+
+    //output the size of LinkedBag. Should be 5.
+    cout << "New size: " << bigBag.getCurrentSize() << endl;
+    int removeTest = bigBag.removeRandom();
+    cout << "Random item '" << removeTest << "' removed." << endl << endl;
+
+    cout << "New size: " << bigBag.getCurrentSize() << endl;
+    vector<int> vectorTest2 = bigBag.toVector();
+
+    //output contents of linkedbag from vector, with item removed.
+    cout << "| ";
+    for (int i = 0; i < bigBag.getCurrentSize(); i++) {
+        cout << vectorTest2[i] << " | ";
+    }
+    cout << endl;
 }
-*/
+// */
