@@ -10,8 +10,6 @@
 #include "Node.h"
 #include <cstddef>
 
-
-
 template<class ItemType>
 LinkedBag<ItemType>::LinkedBag() : headPtr(nullptr), itemCount(0)
 {
