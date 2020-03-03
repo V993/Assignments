@@ -61,7 +61,7 @@ int main() {
 */
 
     //for part 2, revising add() so that entries are added at the end of the chain:
-// /*
+/*
 int main() {
 
     //test value linkedbag
@@ -91,15 +91,35 @@ int main() {
     }
     cout << endl; 
 }
-// */
+*/
 
     //for part 3, revising getCurrentSize so that it counts the number of nodes in the linked chain
     //manually, ITERATIVELY and RECURSIVELY.
-/*
+// /*
 int main() {
-    LinkedBag
+
+    //test value linkedbag
+    LinkedBag<int> bigBag;
+    bool test = bigBag.add(20);
+    bigBag.add(30);
+    bigBag.add(40);
+    bigBag.add(50);
+    bigBag.add(60);
+
+    //establish vector to test all results
+    vector<int> vectorTest = bigBag.toVector();
+
+    //output the size of LinkedBag. Should be 5.
+    cout << "New size: " << bigBag.getCurrentSize() << endl;
+
+    //output contents of linkedbag from vector
+    cout << "| ";
+    for (int i = 0; i < bigBag.getCurrentSize(); i++) {
+        cout << vectorTest[i] << " | ";
+    }
+    cout << endl; 
 }
-*/
+// */
 
     //for part 4, making a new constructor which creates a linkedbag from an array.
 /*

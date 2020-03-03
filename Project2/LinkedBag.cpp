@@ -110,7 +110,15 @@ bool LinkedBag<ItemType>::isEmpty() const
 template<class ItemType>
 int LinkedBag<ItemType>::getCurrentSize() const
 {
-	return itemCount;
+   //counter ptr
+   Node<ItemType>* countNode = headPtr;  
+   int counter = 0;
+   // count each node:
+   while (countNode != nullptr) {
+      countNode = countNode->getNext();
+      counter++;
+   }
+   return counter;
 }  // end getCurrentSize
 
 template<class ItemType>
@@ -150,7 +158,6 @@ bool LinkedBag<ItemType>::add(const ItemType& newEntry)
 
    return true;
 // */
-
       //old implementation, new node inserted at the beginning of the linked chain.
 /*
 
