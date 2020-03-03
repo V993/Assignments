@@ -305,7 +305,7 @@ Node<ItemType>* LinkedBag<ItemType>::getPointerTo(const ItemType& anEntry) const
 
 template<class ItemType>
 bool LinkedBag<ItemType>::removeSecond() {
-   //if the chain only has one item, we don't want to remove anything.
+   
    Node<ItemType>* countNode = headPtr;
    Node<ItemType>* secondNode = headPtr;   
 
@@ -314,6 +314,7 @@ bool LinkedBag<ItemType>::removeSecond() {
       countNode = countNode->getNext();
       counter++;
    }
+   //if the chain only has one item, we don't want to remove anything.
    if (counter < 2) {
       return false;
    }
