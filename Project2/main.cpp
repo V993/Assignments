@@ -10,7 +10,7 @@
 using namespace std;
 
 //for part 1, removing the second item in the bag:
-// /*
+/*
 int main() {
 
     //test value linkedbag
@@ -57,26 +57,26 @@ int main() {
         cout << vectorTest2[i] << " | ";
     }
     cout << endl; 
-}
-// */
+} // end part 1
+*/
 
     //for part 2, revising add() so that entries are added at the end of the chain:
-/*
+// /*
 int main() {
 
     //test value linkedbag
     LinkedBag<int> bigBag;
-    bigBag.add(20);
-    bool test = bigBag.add(30);
+    bool test = bigBag.add(20);
+    bigBag.add(30);
     bigBag.add(40);
     bigBag.add(50);
     bigBag.add(60);
 
     //test sees if it was added (bool returned true)
-    cout << test << endl; 
+    cout << "Item added: " << test << endl; 
 
     //test sees if it's actually in the bag.
-    cout << bigBag.contains(20) << endl;
+    cout << "Item is in bag: " << bigBag.contains(20) << endl;
 
     //establish vector to test all results
     vector<int> vectorTest = bigBag.toVector();
@@ -91,7 +91,7 @@ int main() {
     }
     cout << endl; 
 }
-*/
+// */
 
     //for part 3, revising getCurrentSize so that it counts the number of nodes in the linked chain
     //manually, ITERATIVELY and RECURSIVELY.

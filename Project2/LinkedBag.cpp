@@ -116,43 +116,43 @@ int LinkedBag<ItemType>::getCurrentSize() const
 template<class ItemType>
 bool LinkedBag<ItemType>::add(const ItemType& newEntry)
 {
-//new implementation, new node inserted at the end of the linked chain.
-/*
-   
+      //new implementation, new node inserted at the end of the linked chain.
+// /*
 
-   //establish the new node
-   Node<ItemType>* nextNode = new Node<ItemType>();
-   //designate its data
-   nextNode->setItem(newEntry);
+   Node<ItemType>* nextNodePtr = new Node<ItemType>();
+   nextNodePtr->setItem(newEntry);
+
    //designate where it points (null)
-   nextNode->setNext(nullptr); // redundant, because the default is nullptr
+   nextNodePtr->setNext(nullptr); // redundant, because the default is nullptr
    
-   //establish a pointer to find the last node in the chain
-   Node<ItemType>* last = headPtr;
-
-   //if the headPtr is the only pointer, point it at the new node, done.
+         //if the headPtr is the only pointer, point it at the new node, done.
    if (headPtr == nullptr) {
-      headPtr = nextNode;
+      headPtr = nextNodePtr;
    }
-   
-   //cycle through each pointer till we hit the nullptr, the last link in the chain.
-   while (last != nullptr) {
-      last = last->getNext();
+   else {
+      //establish a pointer to find the last node in the chain
+      Node<ItemType>* last = headPtr;
+      
+      //cycle through each pointer till we hit the nullptr, the last link in the chain.
+      while (last->getNext() != nullptr) {
+         last = last->getNext();
+      }   
+      //at this point, cur_ptr must equal nullptr.
+      //thus, we change the value of cur_ptr to our new pointer.
+      last->setNext(nextNodePtr);
    }
-
+  
    //at this point, cur_ptr must equal nullptr.
    //thus, we change the value of cur_ptr to our new pointer.
-   
-   last->setNext(nextNode);
 
    //and increment itemCount
    itemCount++;
 
    return true;
-*/
+// */
 
-//old implementation, new node inserted at the beginning of the linked chain.
-// /*
+      //old implementation, new node inserted at the beginning of the linked chain.
+/*
 
    //Add to beginning of chain: new node references rest of chain;
    //(headPtr is null if chain is empty)        
@@ -166,8 +166,7 @@ bool LinkedBag<ItemType>::add(const ItemType& newEntry)
    itemCount++;
    
    return true;
-// */
-
+*/
 }  // end add
 
 template<class ItemType>
@@ -310,9 +309,10 @@ Node<ItemType>* LinkedBag<ItemType>::getPointerTo(const ItemType& anEntry) const
 template<class ItemType>
 bool LinkedBag<ItemType>::removeSecond() {
    
+   //counter ptr
    Node<ItemType>* countNode = headPtr;  
-
    int counter = 0;
+   // count each node:
    while (countNode != nullptr) {
       countNode = countNode->getNext();
       counter++;
