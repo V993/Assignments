@@ -150,7 +150,7 @@ int main() {
 */
 
     //for part 5, creating a method which removes a random entry from the bag.
-// /*
+/*
 int main() {
     //test value linkedbag
     LinkedBag<int> bigBag;
@@ -184,4 +184,4 @@ int main() {
     }
     cout << endl;
 }
-// */
+*/
