@@ -52,14 +52,14 @@ DoublyLinkedList<T>::DoublyLinkedList(const DoublyLinkedList<T>& aBag) {
         
     } // end if
 } // end copy
-
 //add method, theoretically works!
 template<class T>
 bool DoublyLinkedList<T>::add(const T& anItem) {
     DoubleNode<T>* nextNodePtr = new DoubleNode<T>();
     
     if (headPtr == nullptr) {
-        std::cout << "There's nothing in this list rn" << std::endl;
+        std::cout << "There's nothing in this list at the moment. I will make the \nfirst entry the last item, and the last entry the first item." << std::endl;
+        tailPtr = nextNodePtr;
     }
 
     nextNodePtr->setItem(anItem); //set new item
