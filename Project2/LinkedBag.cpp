@@ -175,8 +175,8 @@ bool LinkedBag<ItemType>::add(const ItemType& newEntry)
    return true;
 // */
       //old implementation, new node inserted at the beginning of the linked chain.
-/*
 
+// /*
    //Add to beginning of chain: new node references rest of chain;
    //(headPtr is null if chain is empty)        
    Node<ItemType>* nextNodePtr = new Node<ItemType>();
@@ -189,7 +189,7 @@ bool LinkedBag<ItemType>::add(const ItemType& newEntry)
    itemCount++;
    
    return true;
-*/
+// */
 }  // end add
 
 template<class ItemType>

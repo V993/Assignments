@@ -11,17 +11,30 @@
 
 template<class T>
 class DoublyLinkedList {
-    DoubleNode();
-    DoubleNode(DoubleNode<T> aBag);
-    bool insert(const int& position, T item); // inserts item at index position in list
-    bool remove(const int& posiiton); // remove node at index position
-    DoubleNode<T> getAtPos(const int& position) const; // returns the node at position
-    bool isEmpty() const; // returns whether the list is empty
-    void clear(); // clears the list
-    void display(); const; // prints the contents of the list in order
-    void displayBackwards() const; // prints the contents of the list in reverse order
-    DoublyLinkedList<T> interleave(const DoublyLinkedList<T>& aList) // alters the calling list
-                            // to be  the interleaved list of the original and paremeter lists.
+    public:
+        //done
+        DoublyLinkedList(); 
+        DoublyLinkedList(const DoublyLinkedList<T>& aBag);
+        bool add(const T& anItem); //adds item into linkedlist
+
+        //not done
+        bool insert(const int& position, T item); // inserts item at index position in list
+        bool remove(const int& posiiton); // remove node at index position
+        DoubleNode<T> getAtPos(const int& position) const; // returns the node at position
+
+        //done
+        bool isEmpty() const; // returns whether the list is empty
+        void clear(); // clears the list
+        void display() const; // prints the contents of the list in order
+        
+        void displayBackwards() const; // prints the contents of the list in reverse order
+        DoublyLinkedList<T> interleave(const DoublyLinkedList<T>& aList); // alters the calling list
+                                // to be  the interleaved list of the original and paremeter lists.
+    private:
+        DoubleNode<T>* headPtr;
+        DoubleNode<T>* tailPtr; // Pointer to last node
+        int itemCount;
+        DoubleNode<T>* getPointerTo(const T& target) const;
 };
 
 #include "DoublyLinkedList.cpp"
