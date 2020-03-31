@@ -31,7 +31,7 @@ class DoublyLinkedList {
         DoublyLinkedList<T> interleave(const DoublyLinkedList<T>& aList); // alters the calling list
                                 // to be  the interleaved list of the original and paremeter lists.
     private:
-        DoubleNode<T>* headPtr;
+        DoubleNode<T>* headPtr; // Pointer to first node
         DoubleNode<T>* tailPtr; // Pointer to last node
         int itemCount;
         DoubleNode<T>* getPointerTo(const T& target) const;

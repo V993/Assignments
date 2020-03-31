@@ -21,6 +21,6 @@ int main() {
     cout << test.isEmpty() << endl;
     test.display();
 
-    test.displayBackwards();
+    // test.displayBackwards();
 
 }

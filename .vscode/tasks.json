@@ -2,26 +2,28 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "echo",
-            "type": "shell",
-            "command": "echo Hello"
-        },
-        {
-            "type": "shell",
-            "label": "g++.exe build active file",
-            "command": "C:\\mingw-w64\\mingw32\\bin",
-            "args": [
+            "type": "shell", 
+            "label": "g++ build active file", // What is outoutted in the tasks list, named whatever you want
+            "command": "/usr/bin/g++", // specifies the program to run, g++.
+            "args": [                  // specifies command line arguments to be passed to g++
                 "-g",
-                "${file}",
+                "${file}", // take the active file, compile it
+                    // Alternate: build multiple .cpp files with "${workspaceFolder}/*.cpp" instead of ${file}.
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}/${fileBasenameNoExtension}" // create an executable file in the current directory,
+                                                            // with the same name as the file but no extension "a.cpp" --> "a"
+                    // Alternate: Replace "${fileDirname}/${fileBasenameNoExtension}" with a hard-coded filename like "a.out"
             ],
             "options": {
-                "cwd": ""
+                "cwd": "/usr/bin"
             },
+            "problemMatcher": [
+                "$gcc"
+            ],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": true // specifies that this task will be run when you press Ctrl+Shift+B.
+                                  // if false, Ctrl+Shift+B won't work, but Terminal Menu will.
             }
         }
     ]

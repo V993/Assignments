@@ -9,7 +9,7 @@
 
 //default constructor
 template<class T>
-DoublyLinkedList<T>::DoublyLinkedList() : headPtr(nullptr), itemCount(0) {}
+DoublyLinkedList<T>::DoublyLinkedList() : headPtr(nullptr), tailPtr(nullptr), itemCount(0) {}
 
 //parameterized constructor
 template<class T>
@@ -57,21 +57,23 @@ DoublyLinkedList<T>::DoublyLinkedList(const DoublyLinkedList<T>& aBag) {
 template<class T>
 bool DoublyLinkedList<T>::add(const T& anItem) {
     DoubleNode<T>* nextNodePtr = new DoubleNode<T>();
+    
+    if (headPtr == nullptr) {
+        std::cout << "There's nothing in this list rn" << std::endl;
+    }
+
     nextNodePtr->setItem(anItem); //set new item
     nextNodePtr->setNext(headPtr); //new node points next to chain
     nextNodePtr->setPrevious(nullptr); //new node points to null in the previous direction
     headPtr = nextNodePtr; //linking new node to chain
     itemCount++;
 
-    DoubleNode<T>* lastNodePtr = new DoubleNode<T>();
-    lastNodePtr = headPtr;
-    for (int i = 0; i < itemCount; i++) {
-        lastNodePtr = lastNodePtr->getNext();
-    }
-
-    tailPtr = lastNodePtr;
-    std::cout << tailPtr->getItem();
     return true;
+}
+
+template<class T>
+bool DoublyLinkedList<T>::insert(const int& position, T item) {
+
 }
 
 //empty test method
