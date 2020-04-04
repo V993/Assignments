@@ -175,7 +175,6 @@ bool LinkedBag<ItemType>::add(const ItemType& newEntry)
    return true;
 // */
       //old implementation, new node inserted at the beginning of the linked chain.
-
 // /*
    //Add to beginning of chain: new node references rest of chain;
    //(headPtr is null if chain is empty)        
