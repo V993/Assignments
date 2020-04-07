@@ -12,13 +12,15 @@ using namespace std;
 int main() {
     cout << endl;
 
-    DoublyLinkedList<int> test;
+    DoublyLinkedList<int> test; 
 
-    test.add(4);
-    test.add(2);
-    test.add(8);
-    test.add(5);
-    test.add(8);
+    cout << "First item inserted: " << test.insert(4, 1) << endl;
+    cout << "Second item inserted: " << test.insert(2, 2) << endl;
+    cout << "Third item inserted: " << test.insert(5, 3) << endl;
+    cout << "Fourth item inserted: " << test.insert(8, 4) << endl;
+    cout << "New Third inserted, indexes shifted: " << test.insert(8, 3) << endl;
+
+        // should be: 4, 2, 5, 8, 5, 8 and it IS
 
     cout <<         "List1            : ";
     test.display();
@@ -34,12 +36,12 @@ int main() {
 
     DoublyLinkedList<int> test2;
 
-    test2.add(5);
-    test2.add(1);
-    test2.add(8);
-    test2.add(4);
-    test2.add(5);
-    test2.add(9);
+    test2.insert(5, 1);
+    test2.insert(1, 2);
+    test2.insert(8, 3);
+    test2.insert(4, 4);
+    test2.insert(5, 5);
+    test2.insert(9, 6);
 
     cout <<         "List2            : ";
     test2.display();
@@ -53,6 +55,20 @@ int main() {
     cout <<         "                   INTERLEAVE : ";
     interleaved.display();
     cout << endl;
+
+    cout << "removing: " << endl;
+    cout << "removed: " << interleaved.remove(11) << endl;
+    interleaved.display();
+    
+    cout << "removing: " << endl;
+    cout << "removed: " << interleaved.remove(10) << endl;
+    interleaved.display();
+    
+    cout << "removing: " << endl;
+    cout << "removed: " << interleaved.remove(9) << endl;
+    interleaved.display();
+
+
 
 /*
 

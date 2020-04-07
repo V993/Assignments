@@ -103,7 +103,6 @@ bool DoublyLinkedList<T>::add(const T& anItem) {
     if (headPtr == nullptr) { //if the list is empty, make headPtr point to the first node in the chain
         headPtr = nextNodePtr; //headPointer will always point to the first item in the chain
         nextNodePtr->setPrevious(nullptr);
-        headPtr->setNext(nextNodePtr);
     }
     else {
         DoubleNode<T>* last = new DoubleNode<T>();
@@ -112,42 +111,107 @@ bool DoublyLinkedList<T>::add(const T& anItem) {
         nextNodePtr->setPrevious(last);
     }
 
-    tailPtr = nextNodePtr;
+    tailPtr = new DoubleNode<T>();
     tailPtr->setPrevious(nextNodePtr);
 
     itemCount++;
     return true;
 }
 
-//insert method
+//insert method 
 template<class T>
-bool DoublyLinkedList<T>::insert(T item, const int& position) {
+bool DoublyLinkedList<T>::insert(T item, const int &position){
 
-    bool canInsert = !isEmpty() && (position != 0) && (position <= itemCount);
+    if ( (position < 1) || (position > itemCount + 1) ){
+        return false; 
+    }
+    
+    else {
+        // create new node with item
+        DoubleNode<T>* newNode = new DoubleNode<T>(item);
 
-    DoubleNode<T>* newNode = new DoubleNode<T>(item);
-    DoubleNode<T>* courrierNode = new DoubleNode<T>();
-    courrierNode = headPtr;
-    int index = 1; //because our indexing is 1 indexed (starting at 1), we start at 1.
-    //in our while loop, we run through each doubleNode until we hit the node before posiiton index.
-    while (index < position - 1) {
-        courrierNode = courrierNode->getNext();
-        index++; 
-    } //end while
-    DoubleNode<T>* previousNode = new DoubleNode<T>();
-    previousNode = courrierNode;
+        if (position == 1) {// case if the index is 1
+            if (headPtr == nullptr) { //check if there's nothign in the list
+                headPtr = newNode; //link newnode to list if it's empty
+                tailPtr = newNode;
+            }
+            else { // if there is something in the list: 
+                newNode->setNext(headPtr); // set the new item 
+                headPtr->setPrevious(newNode);
+                headPtr = newNode; //headptr points to new item
+            }
+        }
+        
+        else {
+            DoubleNode<T>* courrierNode = headPtr; //create current Pointer
 
-    courrierNode = courrierNode->getNext();
-    courrierNode->setPrevious(newNode);
-    newNode->setNext(courrierNode);
+            // goes to the node before our insert position
+            for(int i = 2; i < position; i++){
+                courrierNode = courrierNode->getNext(); 
+            }
 
-    previousNode->setNext(newNode);
-    newNode->setPrevious(previousNode);
+            if (courrierNode->getNext() != nullptr){//if new node is not at last index
+                (courrierNode->getNext())->setPrevious(newNode); 
+            }
+            else {
+                tailPtr = newNode;
+                // cout << "tailPTr: " << tailPtr->getItem() << endl;
+            }
+            // if newNode is at last index
+            newNode->setNext(courrierNode->getNext());
+            courrierNode->setNext(newNode);
+            newNode->setPrevious(courrierNode);   
+        }
+        itemCount++; // increase size of list beacuse new item added
+        return true; //insert successful!
+    }
+}//end of inster method
 
-    itemCount++;
+//insert method
+    // template<class T>
+    // bool DoublyLinkedList<T>::insert(T item, const int& position) {
 
-    return canInsert;
-}
+    //     bool canInsert = !(position < 1) || !(position > itemCount + 1);
+    //     if (canInsert) 
+    //     {
+    //         DoubleNode<T>* newNode = new DoubleNode<T>();
+    //         DoubleNode<T>* courrierNode = new DoubleNode<T>();
+    //         newNode->setItem(item);
+    //         courrierNode = headPtr;
+
+    //         int index = 1; //because our indexing is 1 indexed (starting at 1), we start at 1.
+    //         //in our while loop, we run through each doubleNode until we hit the node before posiiton index.
+    //         if (position == 1) {
+    //             if (headPtr == nullptr) {  
+    //                 headPtr = newNode;
+    //             }
+    //             else {
+    //                 newNode->setNext(headPtr);
+    //                 headPtr->setPrevious(newNode);
+    //                 headPtr = newNode;
+    //             }
+    //         }
+    //         else {
+    //             while (index < position - 1) { //to get the node before position
+    //                 courrierNode = courrierNode->getNext();
+    //                 index++; 
+    //             } //end while
+
+    //             DoubleNode<T>* previousNode = new DoubleNode<T>();
+    //             previousNode = courrierNode; // this is now the node that should be before
+
+    //             courrierNode = courrierNode->getNext(); // this is now the node that should be after
+    //             courrierNode->setPrevious(newNode); // set the previous node to our new node
+    //             newNode->setNext(courrierNode); // set the next node of our new node to the node that should be after
+
+    //             previousNode->setNext(newNode); // set the next node to our new node
+    //             newNode->setPrevious(previousNode); // mset the previous node of our new node to the node that should be before
+    //         }
+    //         itemCount++;
+    //     }
+
+    //     return canInsert;
+// }
 
 //remove method
 template<class T>
@@ -157,32 +221,46 @@ bool DoublyLinkedList<T>::remove(const int& position) {
 
     bool canRemoveItem = !isEmpty() && (position != 0) && (position <= itemCount);
     if (canRemoveItem) {
-        int index = 1; //because our indexing is 1 indexed (starting at 1), we start at 1.
-        //in our while loop, we run through each doubleNode until we hit the node before posiiton index.
-        while (index < position - 1) {
-            courrierNode = courrierNode->getNext();
-            index++; 
-        } //end while
-        //define the node prior to the node to be deleted
-        DoubleNode<T>* previousNode = new DoubleNode<T>();
-        previousNode = courrierNode;
-        //define the node to be deleted
-        DoubleNode<T>* nodeToBeDeleted = new DoubleNode<T>();
-        nodeToBeDeleted = courrierNode->getNext();
-        //define the node after the node to be deleted
-        courrierNode = (courrierNode->getNext())->getNext();
-        
-        //delete the node
-        delete nodeToBeDeleted;
-        nodeToBeDeleted = nullptr;
+        if (position == 1) {
+            headPtr = courrierNode->getNext();
+            (courrierNode->getNext())->setPrevious(nullptr); //set the second node previous to null
+            delete courrierNode; //now delete the node
+            courrierNode = nullptr;
+        }
+        else if (position == itemCount) {
+            courrierNode = tailPtr; // courrierNode now points to the last node in the list
+            courrierNode = courrierNode->getPrevious(); // making the courrierNode equal to the node to be deleted
+            courrierNode->setNext(nullptr);
+            tailPtr = courrierNode; //setting the tailptr to the node before the node to be deleted
+            delete courrierNode->getNext();
+            courrierNode = nullptr;
+        }
+        else {
+            int index = 1; //because our indexing is 1 indexed (starting at 1), we start at 1.
+            //in our while loop, we run through each doubleNode until we hit the node before posiiton index.
+            while (index < position - 1) {
+                courrierNode = courrierNode->getNext();
+                index++; 
+            } //end while
+            //define the node prior to the node to be deleted
+            DoubleNode<T>* previousNode = new DoubleNode<T>();
+            previousNode = courrierNode;
+            //define the node to be deleted
+            DoubleNode<T>* nodeToBeDeleted = new DoubleNode<T>();
+            nodeToBeDeleted = courrierNode->getNext();
+            //define the node after the node to be deleted
+            courrierNode = (courrierNode->getNext())->getNext();
+            
+            //delete the node
+            delete nodeToBeDeleted;
+            nodeToBeDeleted = nullptr;
 
-        //fill the gap:
-        previousNode->setNext(courrierNode);
-        courrierNode->setPrevious(previousNode);
-    } //end if
-
+            //fill the gap:
+            previousNode->setNext(courrierNode);
+            courrierNode->setPrevious(previousNode);
+        } //end else
     itemCount--;
-
+    } //end if
     return canRemoveItem;
 }
 
@@ -241,38 +319,38 @@ void DoublyLinkedList<T>::clear() {
 //display method
 template<class T>
 void DoublyLinkedList<T>::display() const {
-    DoubleNode<T>* courrierNode = new DoubleNode<T>();
-    courrierNode->setNext(headPtr);
-    for (int i = 0; i < itemCount; i++) {
-        courrierNode = courrierNode->getNext();
+    DoubleNode<T>* courrierNode;
+    courrierNode = headPtr;
+    while (courrierNode->getNext() != nullptr) {
         T item = courrierNode->getItem();
         cout << item <<  " ";
-    }
-    cout << endl;
+        courrierNode = courrierNode->getNext();
+    } // end while
+    cout << courrierNode->getItem() << endl;
 }
 
 template<class T>
 void DoublyLinkedList<T>::displayBackwards() const {
-    DoubleNode<T>* courrierNode = new DoubleNode<T>();
+    DoubleNode<T>* courrierNode;
     courrierNode = tailPtr;
-    for (int i = 0; i < itemCount; i++) {
-        courrierNode = courrierNode->getPrevious();
+    while (courrierNode->getPrevious() != nullptr) {
         T item = courrierNode->getItem();
         cout << item << " ";
+        courrierNode = courrierNode->getPrevious();
     }
-    cout << endl;
+    cout << courrierNode->getItem() << endl;
 }
  
 template<class T>
 DoublyLinkedList<T> DoublyLinkedList<T>::interleave(const DoublyLinkedList<T>& a_list) {
     
     //establish the first node of the first list
-    DoubleNode<T>* doubleNode1 = new DoubleNode<T>();
+    DoubleNode<T>* doubleNode1;
     doubleNode1 = headPtr;
     int itemCount1 = itemCount;
 
     //establish the first node of the first list
-    DoubleNode<T>* doubleNode2 = new DoubleNode<T>();
+    DoubleNode<T>* doubleNode2;
     doubleNode2 = a_list.headPtr;
     int itemCount2 = a_list.itemCount;
 
@@ -280,7 +358,7 @@ DoublyLinkedList<T> DoublyLinkedList<T>::interleave(const DoublyLinkedList<T>& a
     int interleavedSize = itemCount1 + itemCount2;
 
     //define the new list
-    DoublyLinkedList<T>* interleaved = new DoublyLinkedList<T>();
+    DoublyLinkedList<T> interleaved;
 
 /*----------------------------------------------------------------------------------------------*/
 
@@ -293,7 +371,7 @@ DoublyLinkedList<T> DoublyLinkedList<T>::interleave(const DoublyLinkedList<T>& a
         {
             //get the item of the doublenode in the first list
             T itemDoubleNode1 = doubleNode1->getItem();            
-            interleaved->add(itemDoubleNode1);
+            interleaved.insert(itemDoubleNode1, index);
             doubleNode1 = doubleNode1->getNext();
             index++;
         }
@@ -303,11 +381,11 @@ DoublyLinkedList<T> DoublyLinkedList<T>::interleave(const DoublyLinkedList<T>& a
         {
             //get the item of the doublenode in the second list
             T itemDoubleNode2 = doubleNode2->getItem();
-            interleaved->add(itemDoubleNode2);
+            interleaved.insert(itemDoubleNode2, index);
             doubleNode2 = doubleNode2->getNext();
             index++;
         }
     } //end while
    
-    return *interleaved;
+    return interleaved;
 }
