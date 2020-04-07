@@ -51,10 +51,11 @@ int main() {
 
     cout <<         "Interleaved Lists: SHOULD BE  : 4 5 2 1 8 8 5 4 8 5 9" << endl;
     cout <<         "                   INTERLEAVE : ";
-    interleaved.displayBackwards();
+    interleaved.display();
     cout << endl;
 
 /*
+
 Output:
 
 L1 = {4, 2, 8, 5, 8}
@@ -65,6 +66,14 @@ Interleaved should output:
 
 BUT it outputs this:
 {5, 1, 4, 8, 2, 4, 8, 5, 5, 9, 8}
+
+But with the backwards add system, it'll be {8, 9, 5, 5, 8, 4, 2, 8, 4, 1, 5} which gets outputted as:
+
+{5, 1, 4, 8, 2, 4, 8, 5, 5, 9, 8}
+
+This is incorrect, so we need to fix add method. Not sure how.
+
+Display also apparently doesn't work, but I don't know why.
 
 */
 }

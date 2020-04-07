@@ -8,16 +8,15 @@
 
 #include "LinkedBag.h"
 #include "Node.h"
-#include <cstddef>
 
+#include <cstddef>
 #include <iostream>
 
 using namespace std;
 
 template<class ItemType>
 LinkedBag<ItemType>::LinkedBag() : headPtr(nullptr), itemCount(0)
-{
-}  // end default constructor
+{}  // end default constructor
 
 template<class ItemType>
 LinkedBag<ItemType>::LinkedBag(const LinkedBag<ItemType>& aBag)
@@ -175,7 +174,7 @@ bool LinkedBag<ItemType>::add(const ItemType& newEntry)
    return true;
 // */
       //old implementation, new node inserted at the beginning of the linked chain.
-// /*
+/*
    //Add to beginning of chain: new node references rest of chain;
    //(headPtr is null if chain is empty)        
    Node<ItemType>* nextNodePtr = new Node<ItemType>();
@@ -188,7 +187,7 @@ bool LinkedBag<ItemType>::add(const ItemType& newEntry)
    itemCount++;
    
    return true;
-// */
+*/
 }  // end add
 
 template<class ItemType>

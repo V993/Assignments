@@ -66,29 +66,56 @@ DoublyLinkedList<T>::~DoublyLinkedList() {
 //add method, not part of the project, just did for testing
 template<class T>
 bool DoublyLinkedList<T>::add(const T& anItem) {
-    // designate the new DoubleNode
+//  old method, 
+    /* 
+        // designate the new DoubleNode
+        DoubleNode<T>* nextNodePtr = new DoubleNode<T>();
+        // DoubleNode<T>* previousNodePtr = headPtr;
+
+        nextNodePtr->setItem(anItem); //set new item
+        nextNodePtr->setNext(headPtr); //new node points next to chain
+        nextNodePtr->setPrevious(nullptr); //new node points to null in the previous direction
+
+        // see if the list is empty. If it is, we want the tailPtr to point to this node, as it will be last.
+        if ((tailPtr == nullptr) && (headPtr != nullptr)) {
+            //std::cout << "in tail mod" << std::endl;
+            tailPtr = new DoubleNode<T>();
+            headPtr->setPrevious(nextNodePtr);
+            tailPtr->setPrevious(headPtr); //designating this the last node in the chain, its previous pointer should point to tail
+        }
+
+        if (headPtr != nullptr) {
+            headPtr->setPrevious(nextNodePtr);
+        }
+    
+        headPtr = nextNodePtr;
+        itemCount++;
+
+        return true;
+    */
+
+// new method, orders properly:
+
     DoubleNode<T>* nextNodePtr = new DoubleNode<T>();
-    // DoubleNode<T>* previousNodePtr = headPtr;
+    nextNodePtr->setItem(anItem);
+    nextNodePtr->setNext(nullptr);
 
-    nextNodePtr->setItem(anItem); //set new item
-    nextNodePtr->setNext(headPtr); //new node points next to chain
-    nextNodePtr->setPrevious(nullptr); //new node points to null in the previous direction
-
-    // see if the list is empty. If it is, we want the tailPtr to point to this node, as it will be last.
-    if ((tailPtr == nullptr) && (headPtr != nullptr)) {
-        //std::cout << "in tail mod" << std::endl;
-        tailPtr = new DoubleNode<T>();
-        headPtr->setPrevious(nextNodePtr);
-        tailPtr->setPrevious(headPtr); //designating this the last node in the chain, its previous pointer should point to tail
+    if (headPtr == nullptr) { //if the list is empty, make headPtr point to the first node in the chain
+        headPtr = nextNodePtr; //headPointer will always point to the first item in the chain
+        nextNodePtr->setPrevious(nullptr);
+        headPtr->setNext(nextNodePtr);
+    }
+    else {
+        DoubleNode<T>* last = new DoubleNode<T>();
+        last = tailPtr->getPrevious();
+        last->setNext(nextNodePtr);
+        nextNodePtr->setPrevious(last);
     }
 
-    if (headPtr != nullptr) {
-        headPtr->setPrevious(nextNodePtr);
-    }
-   
-    headPtr = nextNodePtr;
+    tailPtr = nextNodePtr;
+    tailPtr->setPrevious(nextNodePtr);
+
     itemCount++;
-
     return true;
 }
 
@@ -216,11 +243,10 @@ template<class T>
 void DoublyLinkedList<T>::display() const {
     DoubleNode<T>* courrierNode = new DoubleNode<T>();
     courrierNode->setNext(headPtr);
-    courrierNode = courrierNode->getNext();
     for (int i = 0; i < itemCount; i++) {
+        courrierNode = courrierNode->getNext();
         T item = courrierNode->getItem();
         cout << item <<  " ";
-        courrierNode = courrierNode->getNext();
     }
     cout << endl;
 }
@@ -229,11 +255,10 @@ template<class T>
 void DoublyLinkedList<T>::displayBackwards() const {
     DoubleNode<T>* courrierNode = new DoubleNode<T>();
     courrierNode = tailPtr;
-    courrierNode = courrierNode->getPrevious();
     for (int i = 0; i < itemCount; i++) {
+        courrierNode = courrierNode->getPrevious();
         T item = courrierNode->getItem();
         cout << item << " ";
-        courrierNode = courrierNode->getPrevious();
     }
     cout << endl;
 }
