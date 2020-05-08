@@ -1,5 +1,5 @@
 Number of Nodes,Start Node Position,End Node Position,Length,Width
-456,(1/0),(9/23),19,24
+456,(1/0),(5/23),19,24
 Position,North,East,South,West,Is Wall
 (0/0),x,(1/0),(0/1),x,1
 (0/1),(0/0),(1/1),(0/2),x,1
