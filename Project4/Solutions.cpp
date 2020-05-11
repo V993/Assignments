@@ -14,10 +14,13 @@ using namespace std;
 namespace solutions
 {
 
-
+/**     Tests a given node and returns the number of walls around it.
+ * @param a_node pointer to a MazeNode object to be tested
+ * @return an integer value designating the number of untraversable nodes around a_node */
 int getNumberOfWalls(MazeNode *a_node)
 {
     int wall_counter = 0;
+    // Old implementation: 
     // // check nesw directions to see if they are walls. Count if wall. return count.
     // for (directions::nesw dir = directions::NORTH; dir < directions::EAST; dir = directions::nesw(dir + 1))
     // {
@@ -27,6 +30,7 @@ int getNumberOfWalls(MazeNode *a_node)
     //     }
     // }
     
+    // Personal implementation 
     MazeNode * direction;
     for (int i = 0; i < 4; i++) 
     {
@@ -38,11 +42,12 @@ int getNumberOfWalls(MazeNode *a_node)
             wall_counter++;
         }
     }
-
-
     return wall_counter;
 }
 
+/**     Tests a given node to see if it is traversible.
+ * @param a_node pointer to a MazeNode object to be tested
+ * @return true if the node can be traversed, false if not. */
 bool canTravel(MazeNode *a_node)
 {
     if (a_node->isVisited() || a_node->isWall())
@@ -52,7 +57,13 @@ bool canTravel(MazeNode *a_node)
     return true;
 }
 
-bool inVector(vector<MazeNode*> aVector, MazeNode* aNode) {
+/**     Tests a node to see whether it's within a given vector of nodes.
+ * @param aVector cannot be empty. Vector contains pointers to MazeNodes.
+ * @param aNode must be of pointer type, without null value.
+ * @post vector and node go unchanged. access only.
+ * @return true if the node is in the vector, false if not. */
+bool inVector(vector<MazeNode*> aVector, MazeNode* aNode) 
+{
     MazeNode* testNode;
     for (int i = 0; i < aVector.size(); i++) {
         testNode = aVector[i];
@@ -62,17 +73,13 @@ bool inVector(vector<MazeNode*> aVector, MazeNode* aNode) {
     return false;
 }
 
-/*  Applications:
-        Detecting cycles in graphs
-        Path finding
-        Finding strongly connected components in a graph
-
-    Time  : O(V + E)
-    Space : O(n) where n is the size of the maze
-    Explores each option individually to max distance.
-    Memory efficient, not speed efficient.
-*/
-//recursive helper function for solveDFS
+/**     Recursive helper function for solveDFS 
+ * @param a_node is a pointer to a node in the maze
+ * @param endNode is a pointer to the last node in the maze, for our base case
+ * @param visitedVector is the stack which is used to store nodes traversed, and pop back nodes to dead ends.
+ * @pre a maze must exist, all params must be of correct types, and there must be a designated start and stop to the maze.
+ * @post visitedVector now contains the path to the end in MazeNodes from the caller.
+ * @return true if the operation to find the end is found, else false. */
 bool recursiveDFS(MazeNode* a_node, MazeNode* endNode, vector<MazeNode> &visitedVector) 
 {
     // to test if we are backtracking (as it is a precondition for a_node on the first pass to be unvisited)
@@ -112,9 +119,20 @@ bool recursiveDFS(MazeNode* a_node, MazeNode* endNode, vector<MazeNode> &visited
     return recursiveDFS(previousNode, endNode, visitedVector);
 }
 
-// Depth-First Search.
-// @param a class Maze maze to be searched.
-// @returns ordered vector with the path nodes from start point to end point.
+/*************************************************************************************/
+
+/*  Applications:
+        Detecting cycles in graphs
+        Path finding
+        Finding strongly connected components in a graph
+
+    Time  : O(V + E)
+    Space : O(n) where n is the size of the maze
+    Explores each option individually to max distance.
+    Memory efficient, not speed efficient. */
+/**     Depth-First Search.
+ * @param a_maze of class Maze maze to be searched. 
+ * @returns ordered vector with the path nodes from start point to end point.*/
 std::vector<MazeNode> solveDFS(Maze &a_maze)
 {
     // establish a node to chase go through each viable path, starting at the firstNode.
@@ -142,11 +160,10 @@ std::vector<MazeNode> solveDFS(Maze &a_maze)
     Time  : O(V + E)
     Space : O(V)
     Explores each node around a depth before continuing.
-    Less memory efficient, same time complexity as DFS.
-*/
-//Breadth-First Search
-//@param a class Maze maze to be searched.
-//@returns ordered vector with the path nodes from start point to end point.
+    Less memory efficient, same time complexity as DFS. */
+/**     Breadth-First search
+ * @param a_maze of class Maze maze to be searched. 
+ * @returns ordered vector with the path nodes from start point to end point.*/
 std::vector<MazeNode> solveBFS(Maze &a_maze)
 {
     /* SETUP */
@@ -223,9 +240,17 @@ std::vector<MazeNode> solveBFS(Maze &a_maze)
     return aPath;
 } // end BFS
 
-// Dead-End Filling Search.
-//@param a class Maze maze to be searched.
-//@returns ordered vector with the path nodes from start point to end point.
+/* Applications: 
+        Detecting dead-ends
+        Path finding
+    Time  : long
+    Space : a lot
+    Explores the maze similarly to BFS, marking each dead end.
+    Marks all paths to dead ends as untraversible, leaving the
+    only remaining path to the end. */
+/**     Dead-End Filling Search.
+ * @param a_maze of class Maze maze to be searched. 
+ * @returns ordered vector with the path nodes from start point to end point.*/
 std::vector<MazeNode> solveDEF(Maze &a_maze)
 {
     /**     First step: Find all dead ends. 
@@ -237,12 +262,15 @@ std::vector<MazeNode> solveDEF(Maze &a_maze)
      *      (as to avoid marking them "visited" for when we find the solution)
      * push back our startNode into our visitedNodes
     */
-    MazeNode * startNode = a_maze.getFirstNode();
-    queue<MazeNode> nodesToVisit;
-    nodesToVisit.push(*startNode);
-    vector<MazeNode*> deadEnds;
-    vector<MazeNode*> visitedNodes;
-    visitedNodes.push_back(startNode);
+
+    // setup:
+
+        MazeNode * startNode = a_maze.getFirstNode();
+        queue<MazeNode> nodesToVisit;
+        nodesToVisit.push(*startNode);
+        vector<MazeNode> deadEnds;
+        vector<MazeNode*> visitedNodes;
+        visitedNodes.push_back(startNode);
 
     /** with our setup complete, we now move into the while 
      * loop to iterate through each node, as long as our queue 
@@ -250,16 +278,14 @@ std::vector<MazeNode> solveDEF(Maze &a_maze)
      * Breadth-First Search traversal. */
     while(!nodesToVisit.empty()) {
         MazeNode * a_node = &nodesToVisit.front();
-
         /** Test to see the number of walls. getNumberOfWalls() 
          * has been modified from the original function, to 
          * accomodate for this algorithm. If the number of walls 
          * is 3 (a dead end), we push back into our original 
          * dead-ends vector. */
         if (getNumberOfWalls(a_node) == 3) {
-            deadEnds.push_back(a_node);
+            deadEnds.push_back(*a_node);
         }
-
         nodesToVisit.pop();
         for (int i = 0; i < 4; i++) {
             MazeNode * direction = a_node->getDirectionNode((directions::nesw)i);
@@ -289,14 +315,16 @@ std::vector<MazeNode> solveDEF(Maze &a_maze)
    
     // iterate through each dead end
     for (int j = 0; j < deadEnds.size(); j++) {
-        MazeNode * deadEndStart = deadEnds[j];
+        MazeNode deadEndStart = deadEnds[j];
+        cout << "Examining dead end at: " << deadEndStart.getStrPos() << " ";
         int numWalls = 3; // as deadEndStart is a dead end
         queue<MazeNode*> toTravel;
-        toTravel.push(deadEndStart);
+        toTravel.push(&deadEndStart);
         while (numWalls >= 2) { //while the node is not in a junction (2 > walls)
             MazeNode* a_node = toTravel.front();
             toTravel.pop();
             a_node->setVisited();
+            cout << "Setting " << a_node->getStrPos() << " to visited." << endl;
             for (int k = 0; k < 4; k++) {
                 MazeNode * direction = a_node->getDirectionNode((directions::nesw)k);
                 if (direction == nullptr) // for cases with mazes not surrounded by walls
@@ -304,55 +332,71 @@ std::vector<MazeNode> solveDEF(Maze &a_maze)
                 if (canTravel(direction)) {
                     toTravel.push(direction);
                     numWalls = getNumberOfWalls(direction);
-                }
-            }
-        }
-    }
+                } // end if
+            } // end for 
+        } // end while 
+    } // end for 
 
     /**     Third Step: Traverse the remaining path to the end.
+     * while the end is not found
+     *      traverse the maze, adding each travelled node to the vector of traversed nodes
+     *      mark each node as visited, using a queue implementation to traverse each available node
+     *      As the only nodes marked untraversed are the paths which do not lead to dead ends, 
+     *      the only viable path for this algoritm to traverse is the path to the end.
      * 
+     * return the vector of nodes to caller.
     */
-
-    bool pathFound = false;
-
-    vector<MazeNode> pathToEnd;
-    pathToEnd.push_back(*startNode);
-    startNode->setVisited();
-    nodesToVisit.push(*startNode); 
+    //second set up
+        bool pathFound = false;
+        vector<MazeNode> pathToEnd;
+        pathToEnd.push_back(*startNode);
+        startNode->setVisited();
+        nodesToVisit.push(*startNode); 
 
     while (!pathFound) {
-        MazeNode a_node = nodesToVisit.front();
+        MazeNode *a_node = &nodesToVisit.front();
         nodesToVisit.pop();
-
+        cout << "New Iteration. Examining: " << a_node->getStrPos() << endl;
+        cout << "node popped from queue. Proceeding to scan directions." << endl;
         for (int l = 0; l < 4; l++) {
-            MazeNode * direction = a_node.getDirectionNode((directions::nesw)l);
-            if (direction == nullptr)
+            cout << "new direction" << endl;
+            MazeNode * directionNode = a_node->getDirectionNode((directions::nesw)l);
+            if (directionNode == nullptr)
                 continue;
-            
-            if (canTravel(direction)) {
-                direction->setVisited();
-                pathToEnd.push_back(*direction);
-                nodesToVisit.push(*direction);
-                if (direction == a_maze.getLastNode())
+            cout << "Currently examining direction: " << l << " node at: " << directionNode->getStrPos() << endl;
+            cout << "Can travel? " << endl;
+            if (canTravel(directionNode)) {
+                cout << "CAN travel. Setting to visited, pushing back into path to end,\nPushing back into nodes to visit. " << endl;
+                directionNode->setVisited();
+                pathToEnd.push_back(*directionNode);
+                nodesToVisit.push(*directionNode);
+                if (directionNode == a_maze.getLastNode()) {
+                    cout << "This node is the end! returning current path to caller!" << endl;
                     pathFound = true;
-            }
-        }
-    }
+                    return pathToEnd;
+                } // end if
+            } // end if
+            cout << "Can't travel." << endl;
+        } // end for
+    } // end while
 
-    return pathToEnd;
+    // If the algorithm reaches this point, it has failed to find the last node.
+    cout << "I failed to get to the end! " << endl;
+    return deadEnds;
 } // end DEF
+
 
 // Personal algorithm.
 // Optimization of past algorithms or an algorithm that already exists.
 // Lowest run times recieve 5 points extra credit. Best submission: 10 points extra.
-//@param a class Maze maze to be searched.
-//@returns ordered vector with the path nodes from start point to end point.
+/** Personal Algorithm Search.
+ * @param a_maze of class Maze maze to be searched. 
+ * @returns ordered vector with the path nodes from start point to end point.*/
 std::vector<MazeNode> solveCustom(Maze &a_maze)
 {
     vector<MazeNode> result;
 
     return result;
 } // end solveCustom
-
 
 } // namespace solutions
